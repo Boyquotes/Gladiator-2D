@@ -6,8 +6,10 @@ var dashSpeed = 550
 var dashDuration = 0.1 * 1000
 var lastDashed = OS.get_ticks_msec() - 10000
 var dashCoolDown = 1 * 1000
+onready var combatHandler = self.get_node("Body") #is also the body sprite
 
-#will handle updating movement dir, and also handle dahsing
+
+
 func processInput():
 	movementDiretion = Vector2.ZERO;
 	if Input.is_key_pressed(KEY_A): 
@@ -40,10 +42,14 @@ func updateChar(dash): #dash will be a bool
 
 func _physics_process(delta):
 	processInput()
+	
+
+
 
 #Flips body based on mouse
 func _process(delta):
-	var direction = (self.position - get_global_mouse_position()).normalized()
-	if direction.x < 0: self.get_node("Body").scale.x = 1
-	else: self.get_node("Body").scale.x = -1
+	if not combatHandler.isAttacking:
+		var direction = (self.position - get_global_mouse_position()).normalized()
+		if direction.x < 0: self.get_node("Body").scale.x = 1
+		else: self.get_node("Body").scale.x = -1
 

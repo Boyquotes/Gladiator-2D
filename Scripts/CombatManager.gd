@@ -3,7 +3,7 @@ extends Node2D
 onready var weaponData = load("res://Scripts/ItemData/Weapons.gd").new()
 onready var weapon = $Weapon
 onready var character = self.get_parent() 
-var isAttacking = false #determines if hitbox shoudl work
+export var isAttacking = false #for outside use
 const weaponDist = 7
 var lastBasic = OS.get_ticks_msec() - 1000
 
@@ -20,15 +20,17 @@ func _input(event):
 			
 			var animPlayer = currWeapon.get_node_or_null("AnimationPlayer")
 			
-			positionWeapon(currWeapon)
 			currWeapon.visible = true
-
+			isAttacking = true
+			
 			animPlayer.connect("animation_finished", self, "attackStopped", [currWeapon])
 			currWeapon.get_node("Hitbox").connect("body_entered", self, "handleHitbox", [currWeapon])
 			animPlayer.play("Swing1")
+			
 
 func attackStopped(animName, weaponNode):
 	weaponNode.visible = false
+	isAttacking = false
 	weaponNode.get_node("Hitbox").disconnect("body_entered", self, "handleHitbox")
 
 func positionWeapon(currWeapon):
