@@ -1,7 +1,13 @@
 extends Node
 
+#health 
+#stats
+
+var maxHealth := 100
+var health := maxHealth
 
 
-func _ready():
-	print("yes")
+
+
+
 
