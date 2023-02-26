@@ -6,7 +6,7 @@ onready var movement := kinematicBody.get_node("Movement")
 
 
 
-func _process(delta):
+func _process(_delta):
 	updateMovement()
 	
 	
@@ -22,3 +22,4 @@ func updateMovement():
 	if Input.is_key_pressed(KEY_D) : direction.x -=1;
 	
 	if direction.length() != 0: movement.call("moveBody", direction)
+	if Input.is_key_pressed(KEY_Q) : movement.call("dash")
